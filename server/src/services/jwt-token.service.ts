@@ -25,7 +25,7 @@ export class JwtTokenService {
     });
   }
 
-  async veryfyRefreshToken(token: string) {
+  async verifyRefreshToken(token: string) {
     return this.jwtService.verifyAsync(token, {
       secret: process.env.REFRESH_SECRET,
     });

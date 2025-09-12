@@ -8,7 +8,7 @@ import { JwtTokenService } from './jwt-token.service';
 export class SessionService {
   constructor(
     @InjectModel(User) private userModel: typeof User,
-    @InjectModel(RefreshToken) private rfreshTokenModel: typeof RefreshToken,
+    @InjectModel(RefreshToken) private refreshTokenModel: typeof RefreshToken,
     private readonly jwtTokenService: JwtTokenService,
   ) {}
 
@@ -21,13 +21,15 @@ export class SessionService {
 
     const tokenPair = await this.jwtTokenService.createTokenPair(tokenPayload);
 
-    await this.rfreshTokenModel.create({
+    await this.refreshTokenModel.create({
       token: tokenPair.refreshToken,
       userId: user.id,
     });
 
+    const {password, ...userData} = user.toJSON()
+
     return {
-      user,
+      user: userData,
       tokenPair,
     };
   }
