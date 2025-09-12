@@ -23,24 +23,24 @@ export class User extends Model<IUser, IUserAttributes> {
     type: DataType.STRING,
     allowNull: false,
   })
-  firstName: string;
+  declare firstName: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  lastName: string;
+  declare lastName: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   })
-  email: string;
+  declare email: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password: string;
+  declare password: string;
 }
