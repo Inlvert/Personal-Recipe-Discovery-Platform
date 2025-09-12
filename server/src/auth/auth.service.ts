@@ -21,20 +21,25 @@ export class AuthService {
 
   async loginUser(createUserDto: CreateUserDto) {
     const user = await this.userModel.findOne({
-      where: {email: createUserDto.email}
-    })
+      where: { email: createUserDto.email },
+    });
 
-    if(!user) {
-      throw new UnauthorizedException('Invalid data for user')
+    if (!user) {
+      throw new UnauthorizedException('Invalid data for user');
     }
 
-    if(user.password !== createUserDto.password) {
-      throw new UnauthorizedException('Invalid data for user')
+    if (user.password !== createUserDto.password) {
+      throw new UnauthorizedException('Invalid data for user');
     }
 
     const userWithTokenPair = await this.sessionService.createSession(user);
 
-    return userWithTokenPair
+    return userWithTokenPair;
+  }
 
+  async refreshUser(refreshToken: string) {
+    const userWithTokenPair = await this.sessionService.refreshSession(refreshToken)
+
+    return userWithTokenPair
   }
 }
