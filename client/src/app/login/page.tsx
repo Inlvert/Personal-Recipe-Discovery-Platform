@@ -1,7 +1,12 @@
+import LoginForm from "@/components/LoginForm";
+
 export default function Login() {
   return (
-    <main className="pt-16">
-      <h1>Login</h1>
-    </main>
+    <>
+      <main className="pt-16">
+        <h1>Login</h1>
+      </main>
+      <LoginForm />
+    </>
   );
 }
