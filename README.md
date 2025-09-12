@@ -29,23 +29,30 @@ To run this project on your machine, you need:
 1. Clone the repository:
 
 ```bash
-
 https://github.com/Inlvert/Personal-Recipe-Discovery-Platform
+```
 
 2. Navigate to the project directory:
 
+```bash
 cd Personal-Recipe-Discovery-Platform
+```
 
 3. Install dependencies for the Backend:
 
+```bash
 cd server
 npm install
+npm run start:dev
+```
 
 4. Install dependencies for the frontend:
 
+```bash
 cd client
 npm install
-
+npm run dev
+```
 
 ## Configure environment variables in .env:
 
