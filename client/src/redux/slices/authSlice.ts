@@ -70,7 +70,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(login.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.user = action.payload;
     });
     builder.addCase(login.rejected, (state, action) => {
@@ -82,7 +82,7 @@ const authSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(refresh.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.user = action.payload;
     });
     builder.addCase(refresh.rejected, (state, action) => {
