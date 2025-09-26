@@ -1,0 +1,12 @@
+{
+  "sqltools.connections": [
+    {
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "driver": "PostgreSQL",
+      "connectString": "postgresql://postgres.qhupjozwkdubilvwqfwr:Boris_inlvert2569inlvert@aws-1-eu-north-1.pooler.supabase.com:5432/postgres",
+      "name": "test"
+    }
+  ]
+}
