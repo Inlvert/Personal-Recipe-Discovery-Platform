@@ -1,5 +1,5 @@
 const CONSTANTS = {
-  baseURL: "http://personal-recipe-discovery-platform.vercel.app",
+  baseURL: "https://personal-recipe-discovery-platform.vercel.app",
   REFRESH_TOKEN: "refreshToken"
 };
 
