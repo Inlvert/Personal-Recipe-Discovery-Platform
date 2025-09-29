@@ -28,6 +28,16 @@ const initialState: AuthState = {
   error: null,
 };
 
+interface APIError {
+  response?: {
+    data?: {
+      errors?: string[];
+    };
+  };
+  message: string;
+}
+
+// 🔹 типізація помилки через unknown
 const login = createAsyncThunk<User, LoginDto, { rejectValue: string[] }>(
   `${SLICE_NAME}/login`,
   async (userData, thunkAPI) => {
@@ -35,7 +45,8 @@ const login = createAsyncThunk<User, LoginDto, { rejectValue: string[] }>(
       const { data } = await API.login(userData);
       console.log(data.user.tokenPair);
       return data.user;
-    } catch (error: any) {
+    } catch (err: unknown) {
+      const error = err as APIError;
       return thunkAPI.rejectWithValue(
         error.response?.data?.errors || [error.message]
       );
@@ -49,7 +60,8 @@ const refresh = createAsyncThunk<User, string, { rejectValue: string[] }>(
     try {
       const { data } = await API.refresh(refreshToken);
       return data.user;
-    } catch (error: any) {
+    } catch (err: unknown) {
+      const error = err as APIError;
       return thunkAPI.rejectWithValue(
         error.response?.data?.errors || [error.message]
       );
@@ -61,34 +73,33 @@ const authSlice = createSlice({
   name: SLICE_NAME,
   initialState,
   reducers: {
-    logout: (state) => {
-      return initialState;
-    },
+    logout: () => initialState,
   },
   extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload;
-    });
-    builder.addCase(login.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload || ["Unknown error"];
-    });
+    builder
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || ["Unknown error"];
+      })
 
-    builder.addCase(refresh.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(refresh.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.user = action.payload;
-    });
-    builder.addCase(refresh.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload || ["Unknown error"];
-    });
+      .addCase(refresh.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(refresh.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(refresh.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload || ["Unknown error"];
+      });
   },
 });
 
